@@ -1,4 +1,4 @@
-# Stochastic and Spatial Models
+# Assignment 2: Stochastic and Spatial Models
 ## Introduction
 In this assignment you (in teams of two people) will be exploring other ways to model
 infectious diseases. In the first part of the assignment you will use a stochastic discrete
@@ -50,14 +50,15 @@ impact the extinction process.
 
 ## Problem 2: Spatial Models - Networks
 In this question you are asked to develop a set of experiments to design and evaluate
-vaccination strategies using a network model. Using the package NDLib (Note there are SIR 
-Network implementations/examples that you can re-use/adapt in the library see 
-https://ndlib.readthedocs.io/en/latest/tutorial.html) you should assess the spread of a 
-disease (SIR) across different types of model networks (Barabasi Albert, Watts-Strogatz, 
-Erdos-Reyni). Finally, you will run a simulated vaccination campaign on a real contact 
-network collected by sociopatterns (link). A modified version of this dataset can be 
-downloaded from Canvas, the network has been converted to a static (non-temporal) form and 
-some edges and nodes have been filtered out.
+vaccination strategies using a network model. Using the package NDLib[^2] you should assess
+the spread of a disease (SIR) across different types of model networks (Barabasi Albert,
+Watts-Strogatz, Erdos-Reyni). Finally, you will run a simulated vaccination campaign
+on a real contact network collected by sociopatterns (link). A modified version of this
+dataset can be downloaded from Canvas, the network has been converted to a static
+(non-temporal) form and some edges and nodes have been filtered out.
+
+[^2]: Note there are SIR Network implementations/examples that you can re-use/adapt in the
+library see https://ndlib.readthedocs.io/en/latest/tutorial.html
 
 ### Implement SIR and Simulate
 Implement SIR disease spread on the network. Think about your experimental design
@@ -86,4 +87,32 @@ Finally, we will conduct vaccination experiments using the sociopatterns dataset
 Figure 1. You should design some code to load in the sociopatterns dataset (this file on
 canvas includes a simple edgelist and NDLib and NetworkX provide ways to import this).
 
-\include
+![alt text](media/readme/datasetView.png)
+
+**Figure 1**: A view of the filtered sociopatterns data set with 374 nodes and 1265 edges. The
+nodes are people and edges exist if the two people spent time near each other during the
+conference. Note that in the original dataset edges had weights indicating how long those
+people were in range of one another. In this assignment we disregard the weights and
+assume all contacts involve equal length of contact and hence equal chance of transmission.
+
+Now consider a scenario in which a disease is spreading on this network. You should run
+multiple experiments, but assume that the disease always starts with a random selection
+of 5 nodes infected.
+
+You are to design a dynamic vaccination strategy in which you have a testing budget and
+a limited number of vaccinations available per iteration of the model. Assume that you
+have 200 tests in total, you can use a maximum number of tests per iteration (this will
+vary per experiment see below), you can of course use less. You can use the tests at any
+point during the spread and you may repeat tests on a node as often as you like. You
+can assume that you know the network structure, but you can only discover the disease
+status of a node after a test. Vaccinations can only be applied to susceptible people and
+that they immediately move people to the removed state. Finally, you might consider
+situations where the tests are not always accurate, but instead have some probability
+(which you can vary) of being accurate. You can also assume that people remain removed
+until the end of the simulation (no waning immunity).
+You should compare your strategy against a simple null strategy which randomly assigns
+vaccinations, you should design a strategy that at least out performs the null strategy.
+Compare the strategies with different vaccination budgets of [1, 3, 5 and 10] per timestep
+and compare with different testing accuracy [0.5, 0.75, 1.0] . Finally, keep in mind that
+the purpose of the assignment is not to design the best strategy, but to evaluate you
+strategy in a systematic and scientific manner.
